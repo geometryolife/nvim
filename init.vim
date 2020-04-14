@@ -369,7 +369,8 @@ Plug 'ajmwagar/vim-deus'
 " 添加文件类型图标
 Plug 'ryanoasis/vim-devicons'
 
-
+" AutoHotKey
+Plug 'huleiak47/vim-ahkcomplete'
 
 
 
@@ -381,3 +382,6 @@ call plug#end()
 
 
 colorscheme deus
+
+
+autocmd FileType autohotkey setl omnifunc=ahkcomplete#Complete
