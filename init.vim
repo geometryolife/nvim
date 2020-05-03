@@ -382,6 +382,14 @@ Plug 'vimwiki/vimwiki'
 " Editor Enhancement
 Plug 'preservim/nerdcommenter'
 
+" Go
+"Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'AndrewRadev/splitjoin.vim'
+
+"Plug 'SirVer/ultisnips'
+
+
 
 Plug 'tpope/vim-surround'  " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
 
@@ -415,7 +423,7 @@ colorscheme deus
 " === Coc
 " ===
 
-let g:coc_global_extensions = ['coc-translator']
+let g:coc_global_extensions = ['coc-translator', 'coc-vimlsp']
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -673,3 +681,63 @@ let g:mkdp_port = ''
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
 
+
+
+" ===
+" === Vim-go
+" ===
+
+"let g:go_def_mapping_enabled = 0
+"let g:go_template_autocreate = 0
+"let g:go_textobj_enabled = 0
+"let g:go_auto_type_info = 1
+"let g:go_def_mapping_enabled = 0
+"let g:go_highlight_array_whitespace_error = 1
+"let g:go_highlight_build_constraints = 1
+"let g:go_highlight_chan_whitespace_error = 1
+"let g:go_highlight_format_strings = 1
+"let g:go_highlight_function_parameters = 1
+"let g:go_highlight_methods = 1
+"let g:go_highlight_space_tab_error = 1
+"let g:go_highlight_string_spellcheck = 1
+"let g:go_highlight_structs = 1
+"let g:go_highlight_trailing_whitespace_error = 1
+"let g:go_highlight_variable_assignments = 0
+"let g:go_highlight_variable_declarations = 0
+"let g:go_doc_keywordprg_enabled = 0
+
+let g:go_fmt_command = "goimports"
+let g:go_textobj_include_function_doc = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+
+autocmd FileType go :set autowrite
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+
+"map <C-n> :cnext<CR>
+"map <C-m> :cprevious<CR>
+"nnoremap <leader>c :cclose<CR>
+"autocmd FileType go nmap <leader>b  <Plug>(go-build)
+"autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap R  <Plug>(go-run)
+"autocmd FileType go nmap <leader>t  <Plug>(go-test)
+" run :GoBuild or :GoTestCompile based on the go file
+
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+
+autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
