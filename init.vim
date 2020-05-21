@@ -93,23 +93,23 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " ===
 "let g:neoterm_autoscroll = 1
 "autocmd TermOpen term://* startinsert
-"tnoremap <C-N> <C-\><C-N>
-"tnoremap <C-O> <C-\><C-N><C-O>
-"let g:terminal_color_0  = '#000000'
-"let g:terminal_color_1  = '#FF5555'
-"let g:terminal_color_2  = '#50FA7B'
-"let g:terminal_color_3  = '#F1FA8C'
-"let g:terminal_color_4  = '#BD93F9'
-"let g:terminal_color_5  = '#FF79C6'
-"let g:terminal_color_6  = '#8BE9FD'
-"let g:terminal_color_7  = '#BFBFBF'
-"let g:terminal_color_8  = '#4D4D4D'
-"let g:terminal_color_9  = '#FF6E67'
-"let g:terminal_color_10 = '#5AF78E'
-"let g:terminal_color_11 = '#F4F99D'
-"let g:terminal_color_12 = '#CAA9FA'
-"let g:terminal_color_13 = '#FF92D0'
-"let g:terminal_color_14 = '#9AEDFE'
+tnoremap <C-N> <C-\><C-N>
+tnoremap <C-O> <C-\><C-N><C-O>
+let g:terminal_color_0  = '#000000'
+let g:terminal_color_1  = '#FF5555'
+let g:terminal_color_2  = '#50FA7B'
+let g:terminal_color_3  = '#F1FA8C'
+let g:terminal_color_4  = '#BD93F9'
+let g:terminal_color_5  = '#FF79C6'
+let g:terminal_color_6  = '#8BE9FD'
+let g:terminal_color_7  = '#BFBFBF'
+let g:terminal_color_8  = '#4D4D4D'
+let g:terminal_color_9  = '#FF6E67'
+let g:terminal_color_10 = '#5AF78E'
+let g:terminal_color_11 = '#F4F99D'
+let g:terminal_color_12 = '#CAA9FA'
+let g:terminal_color_13 = '#FF92D0'
+let g:terminal_color_14 = '#9AEDFE'
 
 
 
@@ -120,7 +120,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " Set <LEADER> as <SPACE>, ; as :
 let mapleader=" "
-"noremap ; :
+noremap ; :
 
 " Save & quit
 noremap S :w<CR>
@@ -389,6 +389,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 "Plug 'SirVer/ultisnips'
 
+Plug 'kien/ctrlp.vim'
 
 
 Plug 'tpope/vim-surround'  " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
@@ -423,7 +424,7 @@ colorscheme deus
 " === Coc
 " ===
 
-let g:coc_global_extensions = ['coc-translator', 'coc-vimlsp']
+let g:coc_global_extensions = ['coc-translator', 'coc-vimlsp', 'coc-python']
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -611,7 +612,7 @@ let g:mkdp_command_for_global = 0
 " set to 1, preview server available to others in your network
 " by default, the server listens on localhost (127.0.0.1)
 " default: 0
-let g:mkdp_open_to_the_world = 1
+let g:mkdp_open_to_the_world = 0
 
 " use custom IP to open preview page
 " useful when you work in remote vim and preview on local browser
@@ -675,7 +676,7 @@ let g:mkdp_markdown_css = ''
 let g:mkdp_highlight_css = ''
 
 " use a custom port to start server or random for empty
-let g:mkdp_port = ''
+let g:mkdp_port = '8888'
 
 " preview page title
 " ${name} will be replace with the file name
@@ -708,6 +709,11 @@ let g:mkdp_page_title = '「${name}」'
 
 let g:go_fmt_command = "goimports"
 let g:go_textobj_include_function_doc = 1
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_metalinter_deadline = "5s"
+
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
