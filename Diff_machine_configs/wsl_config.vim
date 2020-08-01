@@ -27,12 +27,6 @@ let g:mkdp_command_for_global = 0
 " default: 0
 let g:mkdp_open_to_the_world = 0
 
-" use custom IP to open preview page
-" useful when you work in remote vim and preview on local browser
-" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
-" default empty
-let g:mkdp_open_ip = '127.0.0.1'
-
 " specify browser to open preview page
 " default: ''
 let g:mkdp_browser = ''
@@ -87,9 +81,6 @@ let g:mkdp_markdown_css = ''
 " use a custom highlight style must absolute path
 " like '/Users/username/highlight.css' or expand('~/highlight.css')
 let g:mkdp_highlight_css = ''
-
-" use a custom port to start server or random for empty
-let g:mkdp_port = '8888'
 
 " preview page title
 " ${name} will be replace with the file name

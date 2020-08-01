@@ -1,3 +1,7 @@
+" ===
+" === MarkdownPreview
+" ===
+
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
 let g:mkdp_auto_start = 0
@@ -22,12 +26,6 @@ let g:mkdp_command_for_global = 0
 " by default, the server listens on localhost (127.0.0.1)
 " default: 0
 let g:mkdp_open_to_the_world = 0
-
-" use custom IP to open preview page
-" useful when you work in remote vim and preview on local browser
-" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
-" default empty
-let g:mkdp_open_ip = ''
 
 " specify browser to open preview page
 " default: ''
@@ -75,9 +73,6 @@ let g:mkdp_markdown_css = ''
 " use a custom highlight style must absolute path
 " like '/Users/username/highlight.css' or expand('~/highlight.css')
 let g:mkdp_highlight_css = ''
-
-" use a custom port to start server or random for empty
-let g:mkdp_port = ''
 
 " preview page title
 " ${name} will be replace with the file name
