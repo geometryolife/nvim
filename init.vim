@@ -20,7 +20,7 @@ endif
 let has_machine_specific_file = 1
 if empty(glob('~/.config/nvim/_machine_specific.vim'))
 	let has_machine_specific_file = 0
-	silent! exec "!cp ~/.config/nvim/default_configs/_machine_specific_default.vim ~/.config/nvim/_machine_specific.vim"
+	silent! exec "!cp ~/.config/nvim/Diff_machine_configs/_machine_specific_default.vim ~/.config/nvim/_machine_specific.vim"
 endif
 source ~/.config/nvim/_machine_specific.vim
 
@@ -72,14 +72,10 @@ set ttyfast "should make scrolling faster
 "set visualbell
 
 "silent !mkdir -p ~/.config/nvim/tmp/backup
-"silent !mkdir -p ~/.config/nvim/tmp/undo
 ""silent !mkdir -p ~/.config/nvim/tmp/sessions
 "set backupdir=~/.config/nvim/tmp/backup,.
 "set directory=~/.config/nvim/tmp/backup,.
-"if has('persistent_undo')
-"	set undofile
-"	set undodir=~/.config/nvim/tmp/undo,.
-"endif
+
 "set colorcolumn=80
 "set updatetime=1000
 "set virtualedit=block
@@ -118,9 +114,8 @@ let g:terminal_color_14 = '#9AEDFE'
 " === Basic Mappings
 " ===
 
-" Set <LEADER> as <SPACE>, ; as :
+" Set <LEADER> as <SPACE>
 let mapleader=" "
-noremap ; :
 
 " Save & quit
 noremap S :w<CR>
@@ -191,8 +186,8 @@ noremap W 5w
 noremap B 5b
 
 " Ctrl + U or E will move up/down the view port without moving the cursor
-"noremap <C-U> 5<C-y>
-"noremap <C-E> 5<C-e>
+" noremap <C-U> 5<C-y>
+" noremap <C-E> 5<C-e>
 
 
 " ===
@@ -230,7 +225,7 @@ noremap <LEADER>h <C-w>h
 noremap <LEADER>l <C-w>l
 
 " Disable the default s key
-noremap s <nop>
+noremap s <Nop>
 
 " Split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
 noremap sk :set nosplitbelow<CR>:split<CR>
@@ -298,9 +293,8 @@ noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 noremap <LEADER>sc :set spell!<CR>
 
 " Press ` to change case (instead of ~)
-"noremap ` ~
+noremap ` ~
 
-"noremap <C-c> zz
 
 " Enter paste mode
 set pastetoggle=<F2>
@@ -323,10 +317,10 @@ noremap r :call CompileRunGcc()<CR>
 function! CompileRunGcc()
 	execute "w"
 	if &filetype == 'c'
-		if !isdirectory('build')
+		if !isdirectory("build")
 			execute "!mkdir build"
 		endif
-		execute "!gcc % -o build/%<"
+		execute "!gcc -o build/%< %"
 		set splitbelow
 		split
 		set nosplitbelow
@@ -366,6 +360,30 @@ function! CompileRunGcc()
 endfunction
 
 
+
+" Debug function
+noremap R :call DebugRunGDB()<CR>
+function! DebugRunGDB()
+	execute "w"
+	if &filetype == 'c'
+		if !isdirectory("build/debugs")
+			execute "!mkdir -p build/debugs"
+		endif
+		execute "!gcc -std=c11 -g -o build/debugs/%< %"
+		set splitbelow
+		split
+		set nosplitbelow
+		resize -15
+		autocmd TermOpen term://* startinsert
+		:term time ./build/debugs/%<
+	endif
+endfunction
+
+
+
+
+
+
 " ===
 " === Install Plugins with Vim-Plug
 " ===
@@ -381,6 +399,7 @@ Plug 'mhartington/oceanic-next'
 " UI Beautification
 Plug 'mhinz/vim-startify'
 "Plug 'ryanoasis/vim-devicons'
+Plug 'luochen1990/rainbow'
 Plug 'wincent/terminus'
 
 
@@ -389,30 +408,54 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
-
+" Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
+" Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
+" Plug 'dkarter/bullets.vim'
 
 "Plug 'vimwiki/vimwiki'
 
 " Editor Enhancement
 Plug 'preservim/nerdcommenter'
+Plug 'AndrewRadev/switch.vim'
+
+
+" Taglist
+" Plug 'majutsushi/tagbar', { 'on': 'TagbarOpenAutoClose' }
+
+" Undo Tree
+Plug 'mbbill/undotree'
+
+" Bookmarks
+Plug 'kshenoy/vim-signature'
 
 " Go
 "Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'godlygeek/tabular' " ga, or :Tabularize <regex> to align
 
 " Python
 "Plug 'sillybun/vim-repl'
+" Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
+" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
 
 Plug 'voldikss/vim-translator'
+
+" Debugger
+" Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c'}
+
 
 
 "Plug 'SirVer/ultisnips'
 
+" File navigation
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'}
 Plug 'kien/ctrlp.vim'
 
 
 Plug 'tpope/vim-surround'  " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
+" V -normal $cs'"
 
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
@@ -441,6 +484,205 @@ colorscheme OceanicNext
 
 let g:airline_theme='oceanicnext'
 
+" ===
+" === Tabular
+" ===
+vmap ga :Tabularize /
+
+" ===
+" === Tagbar
+" ===
+" map <silent> T :TagbarOpenAutoClose<CR>
+
+" ===
+" === Undotree
+" ===
+nnoremap <leader>U :UndotreeToggle<CR>
+silent !mkdir -p $HOME/.config/nvim/tmp/undo
+if has('persistent_undo')
+	set undofile
+	set undodir=$HOME/.config/nvim/tmp/undo
+endif
+let g:undotree_DiffAutoOpen = 1
+let g:undotree_SetFocusWhenToggle = 1
+" e.g. using 'd' instead of 'days' to save some space.
+" let g:undotree_ShortIndicators = 1
+let g:undotree_WindowLayout = 2
+let g:undotree_DiffpanelHeight = 8
+
+" ===
+" === vim-signature
+" ===
+let g:SignatureMap = {
+        \ 'Leader'             :  "m",
+        \ 'PlaceNextMark'      :  "m,",
+        \ 'ToggleMarkAtLine'   :  "m.",
+        \ 'PurgeMarksAtLine'   :  "dm-",
+        \ 'DeleteMark'         :  "dm",
+        \ 'PurgeMarks'         :  "dm/",
+        \ 'PurgeMarkers'       :  "dm?",
+        \ 'GotoNextLineAlpha'  :  "m<LEADER>",
+        \ 'GotoPrevLineAlpha'  :  "",
+        \ 'GotoNextSpotAlpha'  :  "m<LEADER>",
+        \ 'GotoPrevSpotAlpha'  :  "",
+        \ 'GotoNextLineByPos'  :  "",
+        \ 'GotoPrevLineByPos'  :  "",
+        \ 'GotoNextSpotByPos'  :  "mn",
+        \ 'GotoPrevSpotByPos'  :  "mp",
+        \ 'GotoNextMarker'     :  "",
+        \ 'GotoPrevMarker'     :  "",
+        \ 'GotoNextMarkerAny'  :  "",
+        \ 'GotoPrevMarkerAny'  :  "",
+        \ 'ListLocalMarks'     :  "m/",
+        \ 'ListLocalMarkers'   :  "m?"
+        \ }
+" mx           Toggle mark 'x' and display it in the leftmost column
+" dmx          Remove mark 'x' where x is a-zA-Z
+
+" m,           Place the next available mark
+" m.           If no mark on line, place the next available mark. Otherwise, remove (first) existing mark.
+" m-           Delete all marks from the current line
+" m<Space>     Delete all marks from the current buffer
+" ]`           Jump to next mark
+" [`           Jump to prev mark
+" ]'           Jump to start of next line containing a mark
+" ['           Jump to start of prev line containing a mark
+" `]           Jump by alphabetical order to next mark
+" `[           Jump by alphabetical order to prev mark
+" ']           Jump by alphabetical order to start of next line having a mark
+" '[           Jump by alphabetical order to start of prev line having a mark
+" m/           Open location list and display marks from current buffer
+
+" m[0-9]       Toggle the corresponding marker !@#$%^&*()
+" m<S-[0-9]>   Remove all markers of the same type
+" ]-           Jump to next line having a marker of the same type
+" [-           Jump to prev line having a marker of the same type
+" ]=           Jump to next line having a marker of any type
+" [=           Jump to prev line having a marker of any type
+" m?           Open location list and display markers from current buffer
+" m<BS>        Remove all markers
+
+
+
+" ===
+" === NERDTree
+" ===
+nmap tt :NERDTreeToggle<CR>
+" let NERDTreeMapOpenExpl = ""
+" let NERDTreeMapUpdir = ""
+" let NERDTreeMapUpdirKeepOpen = "l"
+" let NERDTreeMapOpenSplit = ""
+" let NERDTreeOpenVSplit = ""
+" let NERDTreeMapActivateNode = "i"
+" let NERDTreeMapOpenInTab = "o"
+" let NERDTreeMapPreview = ""
+" let NERDTreeMapCloseDir = "n"
+" let NERDTreeMapChangeRoot = "y"
+
+
+" ===
+" === vim-instant-markdown
+" ===
+let g:instant_markdown_slow = 0
+let g:instant_markdown_autostart = 0
+" let g:instant_markdown_open_to_the_world = 1
+" let g:instant_markdown_allow_unsafe_content = 1
+" let g:instant_markdown_allow_external_content = 0
+" let g:instant_markdown_mathjax = 1
+let g:instant_markdown_autoscroll = 1
+
+" ===
+" === Bullets.vim
+" ===
+" let g:bullets_set_mappings = 0
+let g:bullets_enabled_file_types = [
+			\ 'markdown',
+			\ 'text',
+			\ 'gitcommit',
+			\ 'scratch'
+			\]
+
+
+
+" ===
+" === vim-markdown-toc
+" ===
+"let g:vmt_auto_update_on_save = 0
+"let g:vmt_dont_insert_fence = 1
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_fence_text = 'TOC'
+let g:vmt_fence_closing_text = '/TOC'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+" ===
+" === rainbow
+" ===
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+
+" ===
+" === nerdcommenter
+" ===
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+" let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+" let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+" let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+" let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+" let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+" let g:NERDToggleCheckAllLines = 1
+
 
 " ===
 " === Coc
@@ -448,8 +690,23 @@ let g:airline_theme='oceanicnext'
 
 source ~/.config/nvim/coc.vim
 
-
-
+" ===
+" === Vimspector
+" ===
+" let g:vimspector_enable_mappings = 'HUMAN'
+" function! s:read_template_into_buffer(template)
+" 	" has to be a function to avoid the extra space fzf#run insers otherwise
+" 	execute '0r ~/.config/nvim/sample_vimspector_json/'.a:template
+" endfunction
+" command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
+" 			\   'source': 'ls -1 ~/.config/nvim/sample_vimspector_json',
+" 			\   'down': 20,
+" 			\   'sink': function('<sid>read_template_into_buffer')
+" 			\ })
+" " noremap <leader>vs :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
+" sign define vimspectorBP text=☛ texthl=Normal
+" sign define vimspectorBPDisabled text=☞ texthl=Normal
+" sign define vimspectorPC text=🔶 texthl=SpellBad
 
 " ===
 " === Vim-translator

@@ -1,4 +1,5 @@
-autoload
+autoload/
 _machine_specific.vim
 .netrwhist
-plugged
+plugged/
+tmp/
