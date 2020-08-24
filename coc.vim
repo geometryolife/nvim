@@ -5,7 +5,13 @@
 "  \____\___/ \____|  \____\___/|_| |_|_| |_|\__, |
 "                                            |___/
 
-let g:coc_global_extensions = ['coc-translator', 'coc-vimlsp', 'coc-python']
+let g:coc_global_extensions = [
+	\ 'coc-translator',
+	\ 'coc-vimlsp',
+	\ 'coc-python',
+	\ 'coc-bookmark',
+	\ 'coc-todolist'
+	\ ]
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -112,8 +118,9 @@ omap af <Plug>(coc-funcobj-a)
 " Use <TAB> for selections ranges.
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
 " coc-tsserver, coc-python are the examples of servers that support it.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+" 这两句会造成ctrl-i失效
+" nmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -164,5 +171,27 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 "nmap <Leader>r <Plug>(coc-translator-rv)
 
 
+" === coc-todolist ===
+" let g:coc_extension_root=$HOME/'.config/nvim/tmp/coc-todolist-data/'
+" let g:coc_data_home=$HOME/'.config/nvim/tmp'
+nnoremap <Leader>tl :CocList todolist<CR>
+nnoremap <Leader>tc :CocCommand todolist.create<CR>
+" nnoremap <Leader>tu :CocCommand todolist.upload: upload todolist to gist
+" :CocCommand todolist.download: download todolist from gist
+nnoremap <Leader>te :CocCommand todolist.export
+" :CocCommand todolist.closeNotice: close notifications
+" :CocCommand todolist.clear: clear all todos
+" :CocCommand todolist.browserOpenGist: open todolist gist in gist.github.com
 
 
+" === coc-bookmark ===
+nnoremap <Leader>tk :CocList bookmark<CR>
+nnoremap <Leader>tb :CocCommand bookmark.toggle<CR>
+nnoremap <Leader>ta :CocCommand bookmark.annotate<CR>
+" :CocCommand bookmark.prev: jump to the prev bookmark
+" :CocCommand bookmark.next: jump to the next bookmark
+" :CocCommand bookmark.clearForCurrentFile clear bookmark for the current file",
+" :CocCommand bookmark.clearForAllFiles clear bookmark for all files",
+
+" nmap <Leader>bj <Plug>(coc-bookmark-next)
+" nmap <Leader>bk <Plug>(coc-bookmark-prev)

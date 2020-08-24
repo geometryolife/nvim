@@ -35,6 +35,7 @@ source ~/.config/nvim/_machine_specific.vim
 "set autochdir
 
 
+
 " ===
 " === Editor behavior
 " ===
@@ -42,9 +43,14 @@ set number
 "set relativenumber
 set cursorline
 set noexpandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+" set tabstop=2
+" set shiftwidth=2
+" set softtabstop=2
+
+autocmd BufNewFile,BufRead *.vim setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
+" autocmd FileType c :set autowrite
+autocmd BufNewFile,BufRead *.c setlocal noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
+
 set autoindent
 set list
 set listchars=tab:\|\ ,trail:▫
@@ -54,9 +60,9 @@ set scrolloff=4
 "set viewoptions=cursor,folds,slash,unix
 set wrap
 "set textwidth=0
-"set indentexpr=
-"set foldmethod=indent
-"set foldlevel=99
+set indentexpr=
+set foldmethod=indent
+set foldlevel=99
 set foldenable
 "set formatoptions-=tc
 "set noshowmode
@@ -67,8 +73,7 @@ set smartcase
 "set shortmess+=c
 "set inccommand=split
 "set completeopt=longest,noinsert,menuone,noselect,preview
-set ttyfast "should make scrolling faster
-"set lazyredraw "same as above
+set lazyredraw "same as above
 "set visualbell
 
 "silent !mkdir -p ~/.config/nvim/tmp/backup
@@ -120,6 +125,7 @@ let mapleader=" "
 " Save & quit
 noremap S :w<CR>
 noremap Q :q<CR>
+noremap ,q :q!<CR>
 "noremap <C-q> :qa<CR>
 inoremap kj <Esc>
 
@@ -445,6 +451,8 @@ Plug 'voldikss/vim-translator'
 " Debugger
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c'}
 
+" Code check
+Plug 'dense-analysis/ale'
 
 
 "Plug 'SirVer/ultisnips'
@@ -452,10 +460,14 @@ Plug 'voldikss/vim-translator'
 " File navigation
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'}
 Plug 'kien/ctrlp.vim'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 
 Plug 'tpope/vim-surround'  " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
 " V -normal $cs'"
+
+Plug 'theniceboy/vim-calc'
 
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
@@ -483,6 +495,14 @@ colorscheme OceanicNext
 
 
 let g:airline_theme='oceanicnext'
+
+
+" ===
+" === FZF
+" ===
+" noremap <Leader>fa :Ag<CR>
+
+
 
 " ===
 " === Tabular
@@ -581,6 +601,13 @@ nmap tt :NERDTreeToggle<CR>
 
 
 " ===
+" === vim-table-mode
+" ===
+noremap <LEADER>tm :TableModeToggle<CR>
+"let g:table_mode_disable_mappings = 1
+let g:table_mode_cell_text_object_i_map = 'k<Bar>'
+
+" ===
 " === vim-instant-markdown
 " ===
 let g:instant_markdown_slow = 0
@@ -643,10 +670,10 @@ let g:vmt_fence_closing_text = '/TOC'
 
 
 
-
-
-
-
+" ===
+" === Vim-calc
+" ===
+nnoremap ,a :call Calc()<CR>
 
 
 " ===
