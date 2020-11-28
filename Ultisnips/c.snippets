@@ -1,0 +1,76 @@
+snippet pr "Description"
+printf("${1}", ${2});
+endsnippet
+
+snippet scanf "Description"
+(scanf("%${1}", &${2})${3})
+endsnippet
+
+snippet result "Execution Result"
+
+
+
+${0}>>> Execution Result:
+
+endsnippet
+
+snippet ma "Main Function"
+int main(void)
+{
+	${0}
+
+	return 0;
+}
+endsnippet
+
+snippet gets1 "s_gets use array"
+char * s_gets(char * st, int n)
+{
+	char * ret_val;
+	int i = 0;
+
+	ret_val = fgets(st, n, stdin);
+	if (ret_val)
+	{
+		while (st[i] != '\n' && st[i] != '\0')
+			i++;
+		if (st[i] == '\n')
+			st[i] = '\0';
+		else
+			while (getchar() != '\n')
+				continue;
+	}
+	return ret_val;
+}
+endsnippet
+
+snippet gets2 "s_gets use strchr"
+char * s_gets(char * st, int n)
+{
+	char * ret_val;
+	char * find;
+
+	ret_val = fgets(st, n, stdin);
+	if (ret_val)
+	{
+		find = strchr(st, '\n');  /* 查找换行符 */
+		if (find)  /* 如果地址不是 NULL */
+			*find = '\0';  /* 在此处放置一个空字符 */
+		else
+			while (getchar() != '\n')
+				continue;  /* 处理输入行中剩余的字符 */
+	}
+	return ret_val;
+}
+endsnippet
+
+snippet test "Main Test"
+#include <stdio.h>
+
+int main(void)
+{
+	${0}
+
+	return 0;
+}
+endsnippet

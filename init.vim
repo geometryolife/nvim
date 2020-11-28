@@ -48,6 +48,7 @@ set noexpandtab
 " set softtabstop=2
 
 autocmd BufNewFile,BufRead *.vim setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
+autocmd BufNewFile,BufRead *.json setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
 " autocmd FileType c :set autowrite
 autocmd BufNewFile,BufRead *.c setlocal noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
 
@@ -81,12 +82,11 @@ set lazyredraw "same as above
 "set backupdir=~/.config/nvim/tmp/backup,.
 "set directory=~/.config/nvim/tmp/backup,.
 
-"set colorcolumn=80
-"set updatetime=1000
-"set virtualedit=block
+set colorcolumn=80
+set updatetime=100
+set virtualedit=block
 
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
 
 
 " ===
@@ -274,8 +274,8 @@ noremap tml :+tabmove<CR>
 " === Markdown Settings
 " ===
 " Snippets
-source ~/.config/nvim/Ultisnipts/md-snippets.vim
-source ~/.config/nvim/Ultisnipts/vimwiki-snippets.vim
+source $HOME/.config/nvim/md-snippets.vim
+source $HOME/.config/nvim/vimwiki-snippets.vim
 " auto spell
 "autocmd BufRead,BufNewFile *.md setlocal spell
 
@@ -401,6 +401,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'ajmwagar/vim-deus'
 Plug 'mhartington/oceanic-next'
+" Plug 'theniceboy/nvim-deus'
 
 " UI Beautification
 Plug 'mhinz/vim-startify'
@@ -448,6 +449,11 @@ Plug 'godlygeek/tabular' " ga, or :Tabularize <regex> to align
 
 Plug 'voldikss/vim-translator'
 
+" Snippets
+Plug 'SirVer/ultisnips'
+" Plug 'theniceboy/vim-snippets'
+Plug 'honza/vim-snippets'
+
 " Debugger
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c'}
 
@@ -458,6 +464,7 @@ Plug 'dense-analysis/ale'
 "Plug 'SirVer/ultisnips'
 
 " File navigation
+Plug 'gcmt/wildfire.vim'
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'}
 Plug 'kien/ctrlp.vim'
 " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -490,9 +497,10 @@ call plug#end()
 " ===
 set termguicolors " enable true colors support
 
-"colorscheme deus
+" colorscheme deus
 colorscheme OceanicNext
 
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 let g:airline_theme='oceanicnext'
 
@@ -641,8 +649,30 @@ let g:vmt_fence_text = 'TOC'
 let g:vmt_fence_closing_text = '/TOC'
 
 
+" ===
+" === Ultisnips
+" ===
+" let g:tex_flavor = "latex"
+" inoremap <c-n> <nop>
+" let g:UltiSnipsExpandTrigger="<c-e>"
+" let g:UltiSnipsJumpForwardTrigger="<c-e>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-n>"
+" let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/Ultisnips/', $HOME.'/.config/nvim/plugged/vim-snippets/UltiSnips/']
+" silent! au BufEnter,BufRead,BufNewFile * silent! unmap <c-r>
+" " Solve extreme insert-mode lag on macOS (by disabling autotrigger)
+" augroup ultisnips_no_auto_expansion
+"     au!
+"     au VimEnter * au! UltiSnips_AutoTrigger
+" augroup END
 
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/Ultisnips/', $HOME.'/.config/nvim/plugged/vim-snippets/UltiSnips/']
 
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 
 
@@ -679,12 +709,14 @@ nnoremap ,a :call Calc()<CR>
 " ===
 " === rainbow
 " ===
-let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+"set to 0 if you want to enable it later via :RainbowToggle
+let g:rainbow_active = 1
 
 
 " ===
 " === nerdcommenter
 " ===
+" let g:NERDDefaultNesting = 0
 
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -705,10 +737,13 @@ let g:NERDCompactSexyComs = 1
 " let g:NERDCommentEmptyLines = 1
 
 " Enable trimming of trailing whitespace when uncommenting
-" let g:NERDTrimTrailingWhitespace = 1
+let g:NERDTrimTrailingWhitespace = 1
 
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 " let g:NERDToggleCheckAllLines = 1
+
+
+" map <Leader>cn <Plug>NERDCommenterToEOL('n', 'To_EOL')<CR>
 
 
 " ===
@@ -791,6 +826,9 @@ let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_generate_tags = 1
+
+" 禁用K进入GoDoc
+let g:go_doc_keywordprg_enabled = 0
 
 autocmd FileType go :set autowrite
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
