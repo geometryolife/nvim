@@ -1,19 +1,159 @@
 {
 	"coc.preferences.extensionUpdateCheck": "daily",
+	"coc.preferences.snippetStatusText": "Ⓢ ",
+	"coc.preferences.messageLevel": "error",
+	// 目标为显示悬停信息，默认情况下为浮动窗口
+	"coc.preferences.hoverTarget": "float",
+	"coc.preferences.enableFloatHighlight": true,
+	"coc.preferences.formatOnSaveFiletypes": [
+		"javascript",
+		"typescript",
+		"html",
+		"css",
+		"json",
+		"python",
+		"vue"
+	],
+	//"coc.source.around.firstMatch": false,
+	//"coc.source.buffer.firstMatch": false,
+	//"coc.source.syntax.firstMatch": false,
+	// 在完成时不让Vim选择第一项
 	"suggest.noselect": true,
+	"suggest.enablePreselect": false,
+	"suggest.detailMaxLength": 100,
+	// 自动触发补全
+	"suggest.autoTrigger": "always",
+	"suggest.triggerAfterInsertEnter": true,
+	"suggest.timeout": 5000,
+	// 添加预览选项以完成选择，默认值：false。
+	"suggest.enablePreview": true,
+	"suggest.floatEnable": true,
+	"suggest.detailField": "preview",
+	"suggest.snippetIndicator": "",
+	"suggest.triggerCompletionWait": 100,
+	//"suggest.echodocSupport": true,
+	/*
+	"suggest.completionItemKindLabels": {
+		"class": "\uf0e8",
+		"color": "\ue22b",
+		"constant": "\uf8fe",
+		"default": "\uf29c",
+		"enum": "\uf435",
+		"enumMember": "\uf02b",
+		"event": "\ufacd",
+		"field": "\uf93d",
+		"file": "\uf723",
+		"folder": "\uf115",
+		"function": "\u0192",
+		"interface": "\uf417",
+		"keyword": "\uf1de",
+		"method": "\uf6a6",
+		"module": "\uf40d",
+		"operator": "\uf915",
+		"property": "\ue624",
+		"reference": "\ufa46",
+		"snippet": "\ue60b",
+		"struct": "\ufb44",
+		"text": "\ue612",
+		"typeParameter": "\uf728",
+		"unit": "\uf475",
+		"value": "\uf89f",
+		"variable": "\ue71b"
+	},
+	*/
+	//"diagnostic.signOffset": 1,
+	//"diagnostic.errorSign": "\uf467",
+	//"diagnostic.warningSign": "\uf071",
+	//"diagnostic.infoSign": "\uf129",
+	//"diagnostic.hintSign": "\uf864",
+	"diagnostic.errorSign": ">>",
+	"diagnostic.warningSign": "⚠",
+	"diagnostic.infoSign": ">>",
+	"diagnostic.hintSign": ">>",
+	// 禁用ale显示
 	"diagnostic.displayByAle": false,
+	// 关闭插入模式诊断
 	"diagnostic.refreshOnInsertMode": false,
+	// 仅在保存后刷新诊断信息，默认关闭
 	"diagnostic.refreshAfterSave": false,
 	"diagnostic.checkCurrentLine": true,
-	//	"diagnostic.virtualTextPrefix": " ❯❯❯ ",
+	"diagnostic.virtualTextPrefix": " ❯❯❯ ",
 	"diagnostic.virtualText": true,
 	"codeLens.enable": true,
+	// 突出显示组用于突出显示预览窗口中的范围。
 	"list.previewHighlightGroup": "Statement",
-	"coc.preferences.formatOnSaveFiletypes": [
-		"json"
-	],
 	"snippets.ultisnips.directories": [
 		"$HOME/.config/nvim/Ultisnips/",
 		"$HOME/.config/nvim/plugged/vim-snippets/UltiSnips/"
-	]
+	],
+	"languageserver": {
+		/*
+		"ccls": {
+			"command": "ccls",
+			"filetypes": [
+				"c",
+				"cc",
+				"cpp",
+				"cuda",
+				"objc",
+				"objcpp"
+			],
+			"rootPatterns": [
+				".ccls",
+				".ccls-root",
+				"compile_commands.json",
+				".git/",
+				".hg/"
+			],
+			"initializationOptions": {
+				"cache": {
+					"directory": ".ccls-cache"
+				}
+				//,
+				//"client": {
+				//	"snippetSupport": true
+				//}
+			}
+		},
+		*/
+		"clangd": {
+			"command": "clangd",
+			"rootPatterns": [
+				"compile_flags.txt",
+				"compile_commands.json"
+			],
+			"filetypes": [
+				"c",
+				"cc",
+				"cpp",
+				"c++",
+				"objc",
+				"objcpp"
+			]
+		},
+		"golang": {
+			"command": "gopls",
+			// for debug
+			//"args": ["serve", "-debug", "0.0.0.0:8484", "-rpc.trace"],
+			// 用于从当前文件解析rootPath的根模式，默认为工作区根
+			"rootPatterns": [
+				"go.mod"
+			],
+			// 禁用此语言服务器的workspaceFolders功能。
+			"disableWorkspaceFolders": true,
+			"filetypes": [
+				"go"
+			]
+		},
+		"bash": {
+			"command": "bash-language-server",
+			"args": [
+				"start"
+			],
+			"filetypes": [
+				"sh"
+			],
+			"ignoredRootPaths": []
+		}
+	}
 }

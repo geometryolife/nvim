@@ -43,9 +43,9 @@ set number
 "set relativenumber
 set cursorline
 set noexpandtab
-" set tabstop=2
-" set shiftwidth=2
-" set softtabstop=2
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 
 autocmd BufNewFile,BufRead *.vim setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
 autocmd BufNewFile,BufRead *.json setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
@@ -458,7 +458,7 @@ Plug 'honza/vim-snippets'
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c'}
 
 " Code check
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 
 
 "Plug 'SirVer/ultisnips'
