@@ -747,12 +747,6 @@ let g:NERDTrimTrailingWhitespace = 1
 
 
 " ===
-" === Coc
-" ===
-
-source ~/.config/nvim/coc.vim
-
-" ===
 " === Vimspector
 " ===
 " let g:vimspector_enable_mappings = 'HUMAN'
