@@ -67,6 +67,7 @@
 	//"diagnostic.infoSign": "\uf129",
 	//"diagnostic.hintSign": "\uf864",
 	"diagnostic.errorSign": ">>",
+	//"diagnostic.errorSign": "❌",
 	"diagnostic.warningSign": "⚠",
 	"diagnostic.infoSign": ">>",
 	"diagnostic.hintSign": ">>",

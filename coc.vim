@@ -13,9 +13,9 @@ let g:coc_global_extensions = [
 	\ 'coc-clangd',
 	\ 'coc-json',
 	\ 'coc-snippets',
-	\ 'coc-bookmark',
 	\ 'coc-todolist'
 	\ ]
+	" \ 'coc-bookmark',
 
 
 " TextEdit might fail if hidden is not set.

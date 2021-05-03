@@ -32,7 +32,7 @@ source ~/.config/nvim/_machine_specific.vim
 " ===
 "set clipboard=unnamedplus
 "let &t_ut=''
-"set autochdir
+set autochdir
 
 
 
@@ -50,7 +50,7 @@ set softtabstop=2
 autocmd BufNewFile,BufRead *.vim setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
 autocmd BufNewFile,BufRead *.json setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
 " autocmd FileType c :set autowrite
-autocmd BufNewFile,BufRead *.c setlocal noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
+" autocmd BufNewFile,BufRead *.c setlocal noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
 
 set autoindent
 set list
@@ -255,7 +255,7 @@ noremap srp <C-w>b<C-w>K
 noremap srv <C-w>b<C-w>H
 
 " Press <SPACE> + q to close the window below the current window
-noremap <LEADER>q <C-w>j:q<CR>
+noremap <Leader>q <C-w>j:q<CR>
 
 
 " ===
@@ -362,6 +362,13 @@ function! CompileRunGcc()
 		split
 		set nosplitbelow
 		:term go run .
+	elseif &filetype == 'rust'
+		" set splitbelow
+		" split
+		" set nosplitbelow
+		" resize -15
+		" autocmd TermOpen term://* startinsert
+		execute "!cargo run"
 	endif
 endfunction
 
@@ -399,7 +406,7 @@ call plug#begin('~/.config/nvim/plugged')
 " Pretty Dress
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'ajmwagar/vim-deus'
+Plug 'ajmwagar/vim-deus'
 Plug 'mhartington/oceanic-next'
 " Plug 'theniceboy/nvim-deus'
 
@@ -425,6 +432,13 @@ Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'm
 " Editor Enhancement
 Plug 'preservim/nerdcommenter'
 Plug 'AndrewRadev/switch.vim'
+Plug 'jiangmiao/auto-pairs'
+
+
+" Autoformat
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+" Plug 'rhysd/vim-clang-format'
 
 
 " Taglist
@@ -442,7 +456,10 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'godlygeek/tabular' " ga, or :Tabularize <regex> to align
 
+Plug 'rust-lang/rust.vim'
+
 " Python
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 "Plug 'sillybun/vim-repl'
 " Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 " Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
@@ -471,12 +488,14 @@ Plug 'kien/ctrlp.vim'
 Plug 'junegunn/fzf.vim'
 
 
-Plug 'tpope/vim-surround'  " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
+Plug 'tpope/vim-surround'  " type ysiw' to wrap the word with '' or type cs'` to change 'word' to `word`
 " V -normal $cs'"
 
 Plug 'theniceboy/vim-calc'
 
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 call plug#end()
 
@@ -497,8 +516,8 @@ call plug#end()
 " ===
 set termguicolors " enable true colors support
 
-" colorscheme deus
-colorscheme OceanicNext
+colorscheme deus
+" colorscheme OceanicNext
 
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
@@ -676,17 +695,58 @@ let g:UltiSnipsEditSplit="vertical"
 
 
 
+" ===
+" === AutoFormat
+" ===
+augroup autoformat_settings
+  " autocmd FileType bzl AutoFormatBuffer buildifier
+	autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+  " autocmd FileType dart AutoFormatBuffer dartfmt
+	" autocmd FileType go AutoFormatBuffer gofmt
+  " autocmd FileType gn AutoFormatBuffer gn
+  " autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
+  " autocmd FileType java AutoFormatBuffer google-java-format
+  " autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+	autocmd FileType rust AutoFormatBuffer rustfmt
+  " autocmd FileType vue AutoFormatBuffer prettier
+augroup END
 
 
+" ===
+" === vim-clang-format
+" ===
+" let g:clang_format#code_style = "google"
+" let g:clang_format#code_style = "chromium"
+" let g:clang_format#code_style = "mozilla"
+" let g:clang_format#code_style = "llvm"
+" let g:clang_format#style_options = {
+						" \ "AccessModifierOffset" : -4,
+						" \ "AllowShortIfStatementsOnASingleLine" : "true",
+						" \ "AlwaysBreakTemplateDeclarations" : "true",
+						" \ "Standard" : "C++11"}
+
+" map to <Leader>cf in C++ code
+" autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+" autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+" autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+" nmap <Leader>C :ClangFormatAutoToggle<CR>
+" autocmd FileType c ClangFormatAutoEnable
 
 
+" ===
+" === rust.vim
+" ===
+" let g:rustfmt_autosave = 1
 
 
-
-
-
-
-
+" ===
+" === Python-mode
+" ===
+let g:pymode_doc_bind = ''
+let g:pymode_run_bind = ''
 
 
 
@@ -719,7 +779,7 @@ let g:rainbow_active = 1
 " let g:NERDDefaultNesting = 0
 
 " Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
+ let g:NERDSpaceDelims = 1
 
 " Use compact syntax for prettified multi-line comments
 let g:NERDCompactSexyComs = 1
@@ -732,6 +792,7 @@ let g:NERDCompactSexyComs = 1
 
 " Add your own custom formats or override the defaults
 " let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+let g:NERDCustomDelimiters = { 'python': { 'left': '#' } }
 
 " Allow commenting and inverting empty lines (useful when commenting a region)
 " let g:NERDCommentEmptyLines = 1
@@ -811,6 +872,7 @@ nmap <silent> <Leader>x <Plug>TranslateX
 "let g:go_highlight_variable_declarations = 0
 "let g:go_doc_keywordprg_enabled = 0
 
+
 let g:go_fmt_command = "goimports"
 let g:go_textobj_include_function_doc = 1
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
@@ -829,6 +891,9 @@ let g:go_highlight_generate_tags = 1
 
 " 禁用K进入GoDoc
 let g:go_doc_keywordprg_enabled = 0
+
+" gopls
+let g:go_template_autocreate = 0
 
 autocmd FileType go :set autowrite
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
