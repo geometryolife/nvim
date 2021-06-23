@@ -416,6 +416,11 @@ Plug 'mhinz/vim-startify'
 Plug 'luochen1990/rainbow'
 Plug 'wincent/terminus'
 
+" Emoji
+Plug 'junegunn/vim-emoji'
+
+" Git
+Plug 'airblade/vim-gitgutter'
 
 " Intellisense Engine
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -497,6 +502,9 @@ Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
+" Plug 'ianding1/leetcode.vim'
+Plug 'easymotion/vim-easymotion'
+
 call plug#end()
 
 
@@ -529,6 +537,10 @@ let g:airline_theme='oceanicnext'
 " ===
 " noremap <Leader>fa :Ag<CR>
 
+" for e in emoji#list()
+  " call append(line('$'), printf('%s (%s)', emoji#for(e), e))
+" endfor
+set completefunc=emoji#complete
 
 
 " ===
@@ -749,9 +761,37 @@ let g:pymode_doc_bind = ''
 let g:pymode_run_bind = ''
 
 
+" ===
+" === vim-easymotion
+" ===
+map , <Plug>(easymotion-prefix)
+" let g:EasyMotion_do_mapping = 0 " Disable default mappings"
+" <Leader>f{char} to move to {char}
+map  ,f <Plug>(easymotion-bd-f)
+nmap ,f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap ,, <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map  ,L <Plug>(easymotion-bd-jk)
+nmap ,L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  ,w <Plug>(easymotion-bd-w)
+nmap ,w <Plug>(easymotion-overwin-w)
 
 
-
+" ===
+" === vim-gitgutter
+" ===
+let g:gitgutter_sign_added = '▌'
+let g:gitgutter_sign_modified = '░'
+let g:gitgutter_sign_removed = '▎'
+" let g:gitgutter_sign_removed_first_line = '‾'
+let g:gitgutter_sign_removed_first_line = '▔'
+" let g:gitgutter_sign_removed_above_and_below = '_¯'
+" let g:gitgutter_sign_modified_removed = '▓'
 
 
 
@@ -919,5 +959,4 @@ endfunction
 autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 
 autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
-
 
