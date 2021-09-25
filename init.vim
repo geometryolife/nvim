@@ -334,11 +334,14 @@ function! CompileRunGcc()
 		autocmd TermOpen term://* startinsert
 		:term time ./build/%<
 	elseif &filetype == 'cpp'
+		if !isdirectory("build")
+			execute "!mkdir build"
+		endif
 		set splitbelow
-		exec "!g++ -std=c++11 % -Wall -o %<"
+		exec "!g++ -std=c++11 % -Wall -o build/%<"
 		split
 		resize -15
-		:term ./%<
+		:term time ./build/%<
 	elseif &filetype == 'java'
 		exec "!javac %"
 		exec "!time java %<"
@@ -389,11 +392,57 @@ function! DebugRunGDB()
 		resize -15
 		autocmd TermOpen term://* startinsert
 		:term time ./build/debugs/%<
+	elseif &filetype == 'cpp'
+		if !isdirectory("build/debugs")
+			execute "!mkdir -p build/debugs"
+		endif
+		set splitbelow
+		exec "!g++ -std=c++11 -Wall -g -o build/debugs/%< %"
+		split
+		resize -15
+		:term time ./build/debugs/%<
 	endif
 endfunction
 
 
 
+
+" map <F4> :call TitleDet()<CR>
+" function AddTitle()
+    " call append(0,"\#!/usr/bin/env bash")
+    " call append(1,"# ******************************************************")
+    " call append(2,"# Author       : geometryolife")
+    " call append(3,"# Last modified: ".strftime("%Y-%m-%d %H:%M"))
+    " call append(4,"# Email        : geometryolife@gmail.com")
+    " call append(5,"# Filename     : ".expand("%:t"))
+    " call append(6,"# Description  : ")
+    " call append(7,"# ******************************************************")
+    " echohl WarningMsg | echo "Successful in adding copyright." | echohl None
+" endf
+
+" function UpdateTitle()
+     " normal m'
+     " execute '/# Last modified/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+     " normal ''
+     " normal mk
+     " execute '/# Filename/s@:.*$@\=":\t".expand("%:t")@'
+     " execute "noh"
+     " normal 'k
+     " echohl WarningMsg | echo "Successful in updating the copyright." | echohl None
+" endfunction
+
+" function TitleDet()
+    " let n=1
+    " while n < 10
+        " let line = getline(n)
+        " if line =~ '^\#\s*\S*Last\smodified\S*.*$'
+            " call UpdateTitle()
+            " return
+        " endif
+        " let n = n + 1
+    " endwhile
+    " call AddTitle()
+" endfunction
 
 
 
@@ -483,7 +532,6 @@ Plug 'honza/vim-snippets'
 " Plug 'dense-analysis/ale'
 
 
-"Plug 'SirVer/ultisnips'
 
 " File navigation
 Plug 'gcmt/wildfire.vim'
