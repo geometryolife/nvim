@@ -346,7 +346,12 @@ function! CompileRunGcc()
 		exec "!javac %"
 		exec "!time java %<"
 	elseif &filetype == 'sh'
-		:!time bash %
+		set splitbelow
+		split
+		set nosplitbelow
+		resize -15
+		autocmd TermOpen term://* startinsert
+		:term bash %
 	elseif &filetype == 'python'
 		set splitbelow
 		:sp
@@ -354,7 +359,8 @@ function! CompileRunGcc()
 	elseif &filetype == 'html'
 		silent! exec "!".g:mkdp_browser." % &"
 	elseif &filetype == 'markdown'
-		exec "MarkdownPreview"
+		" exec "MarkdownPreview"
+		execute "InstantMarkdownPreview"
 	elseif &filetype == 'tex'
 		silent! exec "VimtexStop"
 		silent! exec "VimtexCompile"
@@ -475,8 +481,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
-" Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
 " Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
 " Plug 'dkarter/bullets.vim'
@@ -492,6 +498,7 @@ Plug 'jiangmiao/auto-pairs'
 " Autoformat
 Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
+Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 " Plug 'rhysd/vim-clang-format'
 
 
@@ -507,13 +514,14 @@ Plug 'kshenoy/vim-signature'
 " Go
 "Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'AndrewRadev/splitjoin.vim'
+" Plug 'AndrewRadev/splitjoin.vim'
 Plug 'godlygeek/tabular' " ga, or :Tabularize <regex> to align
 
 Plug 'rust-lang/rust.vim'
 
 " Python
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'jpalardy/vim-slime'
 "Plug 'sillybun/vim-repl'
 " Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 " Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
@@ -691,19 +699,23 @@ nmap tt :NERDTreeToggle<CR>
 " === vim-table-mode
 " ===
 noremap <LEADER>tm :TableModeToggle<CR>
-"let g:table_mode_disable_mappings = 1
-let g:table_mode_cell_text_object_i_map = 'k<Bar>'
+let g:table_mode_disable_mappings = 0
 
 " ===
 " === vim-instant-markdown
 " ===
 let g:instant_markdown_slow = 0
 let g:instant_markdown_autostart = 0
-" let g:instant_markdown_open_to_the_world = 1
-" let g:instant_markdown_allow_unsafe_content = 1
-" let g:instant_markdown_allow_external_content = 0
-" let g:instant_markdown_mathjax = 1
+let g:instant_markdown_open_to_the_world = 0
+let g:instant_markdown_allow_unsafe_content = 0
+let g:instant_markdown_allow_external_content = 1
+let g:instant_markdown_mathjax = 1
+let g:instant_markdown_mermaid = 1
 let g:instant_markdown_autoscroll = 1
+let g:instant_markdown_port = 8888
+let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+" let g:instant_markdown_browser = "firefox --new-window"
+
 
 " ===
 " === Bullets.vim
@@ -771,6 +783,11 @@ augroup autoformat_settings
 	autocmd FileType rust AutoFormatBuffer rustfmt
   " autocmd FileType vue AutoFormatBuffer prettier
 augroup END
+
+" ===
+" === vim-fmt
+" ===
+" let g:shfmt_fmt_on_save = 1
 
 
 " ===
@@ -853,6 +870,13 @@ let g:gitgutter_sign_removed_first_line = '▔'
 " ===
 nnoremap ,a :call Calc()<CR>
 
+" ===
+" === vim-slime
+" ===
+let g:slime_target = "tmux"
+let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-of}"}
+
+
 
 " ===
 " === rainbow
@@ -933,7 +957,10 @@ vmap <silent> <Leader>w <Plug>TranslateWV
 nmap <silent> <Leader>r <Plug>TranslateR
 vmap <silent> <Leader>r <Plug>TranslateRV
 " Translate the text in clipboard
-nmap <silent> <Leader>x <Plug>TranslateX
+" nmap <silent> <Leader>x <Plug>TranslateX
+
+" let g:translator_proxy_url = 'socks5://127.0.0.1:7891'
+let g:translator_default_engines = ['google']
 
 
 
