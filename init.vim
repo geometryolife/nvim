@@ -144,7 +144,7 @@ noremap <LEADER>rc :e ~/.config/nvim/init.vim<CR>
 nnoremap Y y$
 
 " Copy to system clipboard
-"vnoremap Y "+y
+vnoremap Y "+y
 
 " Indentation
 nnoremap < <<
@@ -164,8 +164,9 @@ noremap <LEADER>dw /\(\<\w\+\>\)\_s*\1
 "noremap <silent> <LEADER>o za
 
 " Open up lazygit
-"noremap \g :Git 
-"noremap <c-g> :tabe<CR>:-tabmove<CR>:term lazygit<CR>
+noremap \g :Git
+noremap <C-g> :tabe<CR>:-tabmove<CR>:term lazygit<CR>
+nnoremap <C-n> :tabe<CR>:-tabmove<CR>:term lazynpm<CR>
 
 
 " ===
@@ -342,6 +343,13 @@ function! CompileRunGcc()
 		split
 		resize -15
 		:term time ./build/%<
+	elseif &filetype =='lua'
+		set splitbelow
+		split
+		set nosplitbelow
+		resize -15
+		autocmd TermOpen term://* startinsert
+		:term lua %
 	elseif &filetype == 'java'
 		exec "!javac %"
 		exec "!time java %<"
@@ -493,7 +501,7 @@ Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'm
 Plug 'preservim/nerdcommenter'
 Plug 'AndrewRadev/switch.vim'
 Plug 'jiangmiao/auto-pairs'
-
+Plug 'junegunn/vim-peekaboo'
 
 " Autoformat
 Plug 'google/vim-maktaba'
@@ -525,6 +533,9 @@ Plug 'jpalardy/vim-slime'
 "Plug 'sillybun/vim-repl'
 " Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 " Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
+
+" Lua
+Plug 'andrejlevkovitch/vim-lua-format'
 
 Plug 'voldikss/vim-translator'
 
@@ -825,6 +836,11 @@ augroup END
 let g:pymode_doc_bind = ''
 let g:pymode_run_bind = ''
 
+" ===
+" === vim-lua-format
+" ===
+autocmd BufWrite *.lua call LuaFormat()
+
 
 " ===
 " === vim-easymotion
@@ -918,6 +934,14 @@ let g:NERDTrimTrailingWhitespace = 1
 
 " map <Leader>cn <Plug>NERDCommenterToEOL('n', 'To_EOL')<CR>
 
+" TODO:  <02-11-21, Joe Chen> "
+" fix bug for Lua
+function! JoeFixCommenter()
+	if search("--[[ ")
+		:%s/--\[\[\s/--\[\[/g
+	endif
+endfunction
+autocmd BufWrite *.lua call JoeFixCommenter()
 
 " ===
 " === Coc
