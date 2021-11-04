@@ -496,7 +496,7 @@ Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'm
 " Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
 " Plug 'dkarter/bullets.vim'
 
-"Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki'
 
 " Editor Enhancement
 Plug 'preservim/nerdcommenter'
@@ -751,6 +751,13 @@ let g:vmt_cycle_list_item_markers = 1
 let g:vmt_fence_text = 'TOC'
 let g:vmt_fence_closing_text = '/TOC'
 
+" ===
+" === vimwiki
+" ===
+let g:vimwiki_list = [{'path': '/home/ubuntu/GitHub-Learning/wiki'}]
+autocmd FileType vimwiki :setlocal expandtab
+nmap <Leader>wl <Plug>VimwikiToggleListItem
+
 
 " ===
 " === Ultisnips
@@ -885,6 +892,10 @@ let g:lazygit_floating_window_use_plenary = 0 " use plenary.nvim to manage float
 let g:lazygit_use_neovim_remote = 1 " fallback to 0 if neovim-remote is not installed
 " setup mapping to call :LazyGit
 nnoremap <silent> <leader>gg :LazyGit<CR>
+
+if has('nvim') && executable('nvr')
+  let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+endif
 
 
 

@@ -87,6 +87,8 @@
 		"$HOME/.config/nvim/Ultisnips/",
 		"$HOME/.config/nvim/plugged/vim-snippets/UltiSnips/"
 	],
+	// For Lua
+	"diagnostic.level": "warning",
 	"languageserver": {
 		/*
 		"ccls": {
