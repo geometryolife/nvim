@@ -311,7 +311,8 @@ set pastetoggle=<F2>
 "autocmd BufEnter * silent! lcd %:p:h
 
 " Call figlet
-noremap tx :r !figlet 
+" noremap tx :r !figlet
+noremap tx :r !toilet -f mono9.tlf 
 
 "noremap <LEADER>- :lN<CR>
 "noremap <LEADER>= :lne<CR>
