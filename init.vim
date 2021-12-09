@@ -276,7 +276,7 @@ noremap tml :+tabmove<CR>
 " ===
 " Snippets
 source $HOME/.config/nvim/md-snippets.vim
-source $HOME/.config/nvim/vimwiki-snippets.vim
+" source $HOME/.config/nvim/vimwiki-snippets.vim
 " auto spell
 "autocmd BufRead,BufNewFile *.md setlocal spell
 
@@ -497,7 +497,7 @@ Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'm
 " Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
 " Plug 'dkarter/bullets.vim'
 
-Plug 'vimwiki/vimwiki'
+" Plug 'vimwiki/vimwiki'
 
 " Editor Enhancement
 Plug 'preservim/nerdcommenter'
@@ -755,9 +755,9 @@ let g:vmt_fence_closing_text = '/TOC'
 " ===
 " === vimwiki
 " ===
-let g:vimwiki_list = [{'path': '/home/ubuntu/GitHub-Learning/wiki'}]
-autocmd FileType vimwiki :setlocal expandtab
-nmap <Leader>wl <Plug>VimwikiToggleListItem
+" let g:vimwiki_list = [{'path': '/home/ubuntu/GitHub-Learning/wiki'}]
+" autocmd FileType vimwiki :setlocal expandtab
+" nmap <Leader>wl <Plug>VimwikiToggleListItem
 
 
 " ===
