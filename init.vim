@@ -59,7 +59,8 @@ set scrolloff=4
 "set notimeout
 "set ttimeoutlen=0
 "set viewoptions=cursor,folds,slash,unix
-set wrap
+" set wrap
+set nowrap
 "set textwidth=0
 set indentexpr=
 set foldmethod=indent
@@ -119,8 +120,12 @@ let g:terminal_color_14 = '#9AEDFE'
 " === Basic Mappings
 " ===
 
-" Set <LEADER> as <SPACE>
+" Set <Leader> as <Space>
 let mapleader=" "
+
+" exchange ; and :
+noremap ; :
+noremap : ;
 
 " Save & quit
 noremap S :w<CR>
@@ -205,7 +210,8 @@ inoremap <M-h> <Left>
 inoremap <M-j> <Down>
 inoremap <M-k> <Up>
 inoremap <M-l> <Right>
-
+inoremap <C-A> <Home>
+inoremap <C-E> <Esc>A
 
 
 " ===
@@ -313,6 +319,9 @@ set pastetoggle=<F2>
 " Call figlet
 " noremap tx :r !figlet
 noremap tx :r !toilet -f mono9.tlf 
+
+" External command
+nnoremap <Leader>cm :r !
 
 "noremap <LEADER>- :lN<CR>
 "noremap <LEADER>= :lne<CR>
