@@ -135,7 +135,7 @@ noremap ,q :q!<CR>
 inoremap kj <Esc>
 
 " Replace the character under the cursor with {char}.
-nnoremap 0 r
+" nnoremap 0 r
 
 
 " Open the vimrc file anytime
@@ -249,8 +249,8 @@ noremap sl :set splitright<CR>:vsplit<CR>
 " Resize splits with arrow keys
 noremap <up> :res +5<CR>
 noremap <down> :res -5<CR>
-noremap <left> :vertical resize-5<CR>
-noremap <right> :vertical resize+5<CR>
+noremap <left> :vertical resize -5<CR>
+noremap <right> :vertical resize +5<CR>
 
 " Place the two screens up and down
 noremap sp <C-w>t<C-w>K
@@ -320,6 +320,9 @@ set pastetoggle=<F2>
 " noremap tx :r !figlet
 noremap tx :r !toilet -f mono9.tlf 
 
+" TODO How to fix the nerdcommenter's bug
+" delfunction CreateMaps
+" call s:CreateMaps('nx', 'Minimal',    'Minimal', 'cm')
 " External command
 nnoremap <Leader>cm :r !
 
@@ -330,7 +333,8 @@ nnoremap <Leader>cm :r !
 "noremap \s :%s//g<left><left>
 
 " Compile function
-noremap r :call CompileRunGcc()<CR>
+noremap <Leader>rr :call CompileRunGcc()<CR>
+noremap <M-r> :call CompileRunGcc()<CR>
 function! CompileRunGcc()
 	execute "w"
 	if &filetype == 'c'
