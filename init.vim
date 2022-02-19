@@ -205,13 +205,20 @@ noremap B 5b
 " ===
 " === Insert Mode Cursor Movement
 " ===
-inoremap <M-a> <ESC>A
+inoremap <M-0> <Home>
+inoremap <M-a> <End>
 inoremap <M-h> <Left>
 inoremap <M-j> <Down>
 inoremap <M-k> <Up>
 inoremap <M-l> <Right>
-inoremap <C-A> <Home>
-inoremap <C-E> <Esc>A
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <M-b> <Esc>bi
+inoremap <M-f> <Esc>ea
 
 
 " ===
