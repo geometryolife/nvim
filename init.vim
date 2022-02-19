@@ -51,11 +51,12 @@ autocmd BufNewFile,BufRead *.vim setlocal noexpandtab tabstop=2 softtabstop=2 sh
 autocmd BufNewFile,BufRead *.json setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
 " autocmd FileType c :set autowrite
 " autocmd BufNewFile,BufRead *.c setlocal noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
+autocmd BufNewFile,BufRead *.md setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
 
 set autoindent
 set list
-set listchars=tab:\|\ ,trail:▫
-set scrolloff=4
+set listchars=tab:\⋮\ ,trail:▫
+set scrolloff=5
 "set notimeout
 "set ttimeoutlen=0
 "set viewoptions=cursor,folds,slash,unix
@@ -123,6 +124,9 @@ let g:terminal_color_14 = '#9AEDFE'
 " Set <Leader> as <Space>
 let mapleader=" "
 
+" Disable the default s key
+noremap s <Nop>
+
 " exchange ; and :
 noremap ; :
 noremap : ;
@@ -177,12 +181,11 @@ nnoremap <C-n> :tabe<CR>:-tabmove<CR>:term lazynpm<CR>
 " ===
 " === Cursor Movement
 " ===
-" Cursor movement (the default arrow keys are used for resizing windows)
-"     ^
+"     ↑
 "     k
-" < h   l >
+" ← h   l →
 "     j
-"     v
+"     ↓
 
 " K/J keys for 5 times k/j (faster navigation)
 noremap <silent> K 5k
@@ -192,6 +195,8 @@ noremap <silent> J 5j
 noremap <silent> H 0
 " L key: go to the end of the line
 noremap <silent> L $
+nnoremap <expr> ss col(".") == 1 ? "$" : "0"
+vnoremap <expr> ss col(".") == 1 ? "$h" : "0"
 
 " Faster in-line navigation
 noremap W 5w
@@ -243,9 +248,6 @@ noremap <LEADER>k <C-w>k
 noremap <LEADER>j <C-w>j
 noremap <LEADER>h <C-w>h
 noremap <LEADER>l <C-w>l
-
-" Disable the default s key
-noremap s <Nop>
 
 " Split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
 noremap sk :set nosplitbelow<CR>:split<CR>
