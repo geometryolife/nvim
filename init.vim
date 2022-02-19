@@ -55,12 +55,19 @@ autocmd BufNewFile,BufRead *.md setlocal expandtab tabstop=2 softtabstop=2 shift
 
 set autoindent
 set list
-set listchars=tab:\⋮\ ,trail:▫
+" set listchars=tab:\┆\ ,trail:▫
+set listchars=tab:\┇\ ,trail:▫
+" set listchars=tab:\┊\ ,trail:▫
+" set listchars=tab:\┋\ ,trail:▫
+" set listchars=tab:\⋮\ ,trail:▫
+" set listchars=tab:\¦\ ,trail:▫
+" set listchars=tab:\|\ ,trail:▫
+" set listchars=tab:\│\ ,trail:▫
+" set listchars=tab:\┃\ ,trail:▫
 set scrolloff=5
 "set notimeout
 "set ttimeoutlen=0
 "set viewoptions=cursor,folds,slash,unix
-" set wrap
 set nowrap
 "set textwidth=0
 set indentexpr=
@@ -141,6 +148,8 @@ inoremap kj <Esc>
 " Replace the character under the cursor with {char}.
 " nnoremap 0 r
 
+" Enter digraph
+inoremap <M-m> <C-k>
 
 " Open the vimrc file anytime
 noremap <LEADER>rc :e ~/.config/nvim/init.vim<CR>
@@ -159,8 +168,19 @@ vnoremap Y "+y
 nnoremap < <<
 nnoremap > >>
 
-" Search
-noremap <LEADER><CR> :nohlsearch<CR>
+" Highlight search toggle
+nnoremap <Leader><CR> :set nohlsearch!<CR>
+
+" Wrap toggle
+nnoremap <Leader>sw :set wrap!<CR>
+
+" Better indenting
+vnoremap < <gv
+vnoremap > >gv
+
+" Switch buffer
+nnoremap <Leader>bn :bnext<CR>
+nnoremap <Leader>bp :bprevious<CR>
 
 " Adjacent duplicate words
 noremap <LEADER>dw /\(\<\w\+\>\)\_s*\1
@@ -250,16 +270,16 @@ noremap <LEADER>h <C-w>h
 noremap <LEADER>l <C-w>l
 
 " Split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
-noremap sk :set nosplitbelow<CR>:split<CR>
-noremap sj :set splitbelow<CR>:split<CR>
 noremap sh :set nosplitright<CR>:vsplit<CR>
+noremap sj :set splitbelow<CR>:split<CR>
+noremap sk :set nosplitbelow<CR>:split<CR>
 noremap sl :set splitright<CR>:vsplit<CR>
 
-" Resize splits with arrow keys
-noremap <up> :res +5<CR>
-noremap <down> :res -5<CR>
-noremap <left> :vertical resize -5<CR>
-noremap <right> :vertical resize +5<CR>
+" Resize current window
+nnoremap <M-H> :vertical resize -5<CR>
+nnoremap <M-J> :resize -5<CR>
+nnoremap <M-K> :resize +5<CR>
+nnoremap <M-L> :vertical resize +5<CR>
 
 " Place the two screens up and down
 noremap sp <C-w>t<C-w>K
@@ -272,6 +292,7 @@ noremap srv <C-w>b<C-w>H
 
 " Press <SPACE> + q to close the window below the current window
 noremap <Leader>q <C-w>j:q<CR>
+
 
 
 " ===
