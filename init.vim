@@ -129,6 +129,7 @@ let g:terminal_color_14 = '#9AEDFE'
 " ===
 
 " Set <Leader> as <Space>
+nnoremap <Space> <NOP>
 let mapleader=" "
 
 " Disable the default s key
