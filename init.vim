@@ -351,6 +351,9 @@ set pastetoggle=<F2>
 " noremap tx :r !figlet
 noremap tx :r !toilet -f mono9.tlf 
 
+" Insert date
+noremap td :r !date +'\%Y-\%m-\%d \%a'<CR>
+
 " TODO How to fix the nerdcommenter's bug
 " delfunction CreateMaps
 " call s:CreateMaps('nx', 'Minimal',    'Minimal', 'cm')
