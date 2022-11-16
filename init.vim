@@ -135,10 +135,6 @@ let mapleader=" "
 " Disable the default s key
 noremap s <Nop>
 
-" exchange ; and :
-noremap ; :
-noremap : ;
-
 " Save & quit
 noremap S :w<CR>
 noremap Q :q<CR>
