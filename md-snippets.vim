@@ -16,6 +16,7 @@ autocmd Filetype markdown inoremap <buffer> ,3 ###<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,4 ####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,5 #####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,l --------<Enter>
+autocmd Filetype markdown inoremap <buffer> ,. <Space>=><Space>
 autocmd Filetype go inoremap <buffer> ,= // ===<Space>Output<Space>===<Esc>
 autocmd Filetype go inoremap <buffer> ,; <Space>:=<Space>
 
