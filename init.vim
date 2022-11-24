@@ -33,8 +33,9 @@ source ~/.config/nvim/_machine_specific.vim
 "set clipboard=unnamedplus
 "let &t_ut=''
 set autochdir
-
-
+" set novisualbell
+" set noerrorbells
+" set belloff=all
 
 " ===
 " === Editor behavior
