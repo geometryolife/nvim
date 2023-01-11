@@ -15,7 +15,8 @@ let g:coc_global_extensions = [
 	\ 'coc-snippets',
 	\ 'coc-todolist',
 	\ 'coc-yank',
-	\ 'coc-sumneko-lua'
+	\ 'coc-sumneko-lua',
+	\ 'coc-markmap'
 	\ ]
 	" \ 'coc-bookmark',
 
